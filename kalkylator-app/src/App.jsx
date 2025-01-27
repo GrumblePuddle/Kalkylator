@@ -1,20 +1,64 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 function App() {
+  const [firstNum, setFirstNum] = useState("0");
+  const [secondNum, setSecondNum] = useState(0);
+  const [operator, setOperator] = useState("");
+  const [input, setInput] = useState("");
+  const [on, setOn] = useState(false);
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    setTimeout(console.log(firstNum));
+  }, []);
+
+  const addNum = (num) => {
+    setFirstNum((f) => f + num);
+  };
+
+  const handleOperator = (opr) => {
+    setOperator(opr);
+    setSecondNum(firstNum);
+    setFirstNum("");
+  };
+
+  // const calculation = () => {
+  //   let result;
+  //   if (operator === "+") {
+  //     result = firstNum + secondNum;
+  //   } else if (operator === "-") {
+  //     result = firstNum - secondNum;
+  //   } else if (operator === "/") {
+  //     result = firstNum / secondNum;
+  //   } else if (operator === "x") {
+  //     result = firstNum * secondNum;
+  //   }
+  // };
+
+  const turnOn = () => {
+    setOn(!on);
+    if (on) {
+      inputRef.current.value = "0";
+    } else {
+      inputRef.current.value = "";
+    }
+  };
+
   return (
     <div className="kalkylator">
       <div className="input-container">
-        <input type="text" className="input" />
+        <input type="text" className="input" ref={inputRef} />
       </div>
       <div className="container">
         <div className=" item item-1">
-          <button>CE</button>
+          <button>🥑</button>
         </div>
         <div className=" item item-2">
-          <button>%</button>
+          <button>🎄</button>
         </div>
         <div className="item item-3">
-          <button>7</button>
+          <button onClick={() => addNum("7")}>7</button>
         </div>
         <div className="item item-4">
           <button>8</button>
@@ -23,7 +67,7 @@ function App() {
           <button>9</button>
         </div>
         <div className="item item-6">
-          <button>/</button>
+          <button onClick={handleOperator}>/</button>
         </div>
         <div className="item item-7">
           <button>4</button>
@@ -35,7 +79,7 @@ function App() {
           <button>6</button>
         </div>
         <div className="item item-10">
-          <button>x</button>
+          <button onClick={handleOperator}>x</button>
         </div>
         <div className="item item-11">
           <button>1</button>
@@ -47,7 +91,7 @@ function App() {
           <button>3</button>
         </div>
         <div className="item item-14">
-          <button>-</button>
+          <button onClick={handleOperator}>-</button>
         </div>
         <div className="item item-15">
           <button>0</button>
@@ -59,10 +103,10 @@ function App() {
           <button>=</button>
         </div>
         <div className="item item-18">
-          <button>+</button>
+          <button onClick={handleOperator}>+</button>
         </div>
         <div className="item item-19">
-          <button>ON/C</button>
+          <button onClick={turnOn}>ON/C</button>
         </div>
       </div>
     </div>
